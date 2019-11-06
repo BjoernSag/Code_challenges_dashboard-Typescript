@@ -26,7 +26,7 @@ const DashboardComponents: React.FC<Props> = (props) => {
   return (
     <OuterGrid>
       <Headline>Hii! Welcome to Graphs and stuff</Headline>
-      <Text>Try it out. Have fun. This is all a testttttt</Text>
+      <Text>Try it out. Have fun. I hope you enjoy graphs and tables</Text>
       <img
         height="300px"
         width="500px" 
