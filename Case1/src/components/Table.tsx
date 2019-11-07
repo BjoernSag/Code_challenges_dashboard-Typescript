@@ -197,8 +197,8 @@ const Table: React.FC<Props> = (props) => {
   return (
     <OuterGrid>
       <StyledOverview>
-      <StyledSquare><h3>Total items: <br />{props.points.length}</h3></StyledSquare>
-      <StyledSquare><h3>Average price: <br />{findAveragePrice()}</h3></StyledSquare>
+        <StyledSquare><h3>Total items: <br />{props.points.length}</h3></StyledSquare>
+        <StyledSquare><h3>Average price: <br />{findAveragePrice()}</h3></StyledSquare>
       </StyledOverview>
       <StyledTable>
         

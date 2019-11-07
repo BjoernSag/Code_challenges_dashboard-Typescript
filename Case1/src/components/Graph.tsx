@@ -3,7 +3,7 @@ import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 import styled from 'styled-components'
 import Blackgraph from './graphComponents/Blackgraph'
 import ColoredGraph from './graphComponents/ColoredGraph'
-import LineGraph from './graphComponents/ZoomableGraph'
+import LineGraph from './graphComponents/LineGraph'
 
 const OuterGrid = styled.div`
     max-width: 100%
