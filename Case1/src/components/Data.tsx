@@ -88,6 +88,7 @@ const DashboardComponents: React.FC<Props> = (props) => {
 
     The type of graph is chosen based on the props style, where we give the name of the graph to get the
     corrent one
+    id is shownGraphs so we can search for it while doing tests
 
     Checks if the id is not '-1', which is the id we gave for the empty graph in the declaration,
      before rendering the button to delete
@@ -96,9 +97,9 @@ const DashboardComponents: React.FC<Props> = (props) => {
       removeElements -- remove element based on id
   */
   const renderGraphComponents = () => {
-    return <GraphComponents>
+    return <GraphComponents id="shownGraphs">
     {graphsArray.map(( p:any ) =>
-      <div key={p.id}>
+      <div className="graphComponent" key={p.id}>
         <Graph style={p.name} points={data!=='' ? data : currentDataset.points} width={750} height={400} />
         <br />
         {p.id !==-1 ? <button onClick={() => removeElement(p.id)}>Remove element</button> : ''}
