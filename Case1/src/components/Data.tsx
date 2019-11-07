@@ -54,14 +54,24 @@ const DashboardComponents: React.FC<Props> = (props) => {
   /* Add a graph to state -- will be rendered
     I had to add name and id when I declared graphsArray state, which is why there is an extra "else if"
     to delete the first object of the array once we add a new one
+
+    The find statement is there because of the awkward way I decided to deal with starting with an empty
+    name and id. If that isn't there the first two elements added to the array will have the same id
+    but every element after that will work fine.
+
+    TODO: Refactor so I don't need the find statement
   */
   const addGraph = (newName:string, newId:number) => {
+    let newGraphsArray = [{}]
     if(graphsArray[0]===undefined ) {
       addToGraphArray(graphsArray.concat({ name:newName, id:newId }))
     }
     else if(graphsArray[0].name==='')
       addToGraphArray([{ name:newName, id:newId }])
     else {
+      if(graphsArray.find(p => p.id===newId)) {
+        newId = newId+1
+      }
       addToGraphArray(graphsArray.concat({ name:newName, id:newId }))
       }
   }

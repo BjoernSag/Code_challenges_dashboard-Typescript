@@ -46,7 +46,7 @@ border: 0.01em solid grey;
   grid-template-columns: 1fr 1fr 1fr;
 `
 
-const StyledListItem = styled.p`
+const StyledListItem = styled.div`
   border: 0.01em solid grey;
   font-size: 1.5em;
   display: grid;
@@ -155,21 +155,25 @@ const Table: React.FC<Props> = (props) => {
   const tableItems = () => {
     var months = ["January", "February", "March", "April", "May",
      "June", "July", "August", "September", "October", "November", "December"];
-    return (currentArray.map((p:any) => 
-    <StyledListItem key={p[0]}>
-      <div>
-        {(p[0] ? new Date(p[0]).getUTCDate() : p[0])} 
-        {(p[0] ? months[new Date(p[0]).getUTCMonth()] : p[0])}
-        {(p[0] ? new Date(p[0]).getUTCFullYear() : p[0])}
+
+    return currentArray[0] ? (currentArray.map((p:any) =>
+       <div key={p[0]}>
+        <StyledListItem>
+          <div>
+            {new Date(p[0]).getUTCDate()} 
+            {months[new Date(p[0]).getUTCMonth()]}
+            {new Date(p[0]).getUTCFullYear()}
+          </div>
+          <div>
+            {p[1]} MW/H
+          </div>
+          <div> 
+            <button onClick={() => deleteItem(p[0])}> Delete item</button>
+          </div>
+        </StyledListItem> 
       </div>
-      <div>
-        {p[1]} MW/H
-      </div>
-      <div> 
-        <button onClick={() => deleteItem(p[0])}> Delete item</button>
-      </div>
-    </StyledListItem>
-  ))
+    
+  )) : ''
   }
 
   /* return the buttons used to navigate the table
