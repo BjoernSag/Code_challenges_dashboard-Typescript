@@ -156,7 +156,7 @@ const Table: React.FC<Props> = (props) => {
     var months = ["January", "February", "March", "April", "May",
      "June", "July", "August", "September", "October", "November", "December"];
 
-    return currentArray[0] ? (currentArray.map((p:any) =>
+    return currentArray[0][0] ? (currentArray.map((p:any) =>
        <div key={p[0]}>
         <StyledListItem>
           <div>
