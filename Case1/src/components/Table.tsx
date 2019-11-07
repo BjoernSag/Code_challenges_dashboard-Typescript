@@ -19,6 +19,20 @@ const divideIntoPieces = (originalList:Array<any>) => {
 
 const OuterGrid = styled.div`
   width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+`
+
+const StyledOverview = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  justify-content: center; 
+  align-items: center;
+`
+
+const StyledSquare = styled.div`
+text-align:center;
+
 `
 const StyledTable = styled.div`
   width: 100%;
@@ -92,6 +106,16 @@ const Table: React.FC<Props> = (props) => {
   const changePage = (nextPage:number) => {
     setCurrentPage(nextPage)
     setCurrentArray(newList[nextPage])
+  }
+
+  const findAveragePrice = () => {
+    let averagePrice = 0;
+    for(let i = 0; i<props.points.length; i++){
+      averagePrice += props.points[i][1]
+    }
+    averagePrice = averagePrice/props.points.length
+    averagePrice = Math.round(averagePrice * Math.pow(10, 2)) / Math.pow(10, 2)
+    return averagePrice
   }
 
   /* Concat all the array parts together so we can return the same format we got in. Easier to work with
@@ -172,7 +196,12 @@ const Table: React.FC<Props> = (props) => {
   /*  */
   return (
     <OuterGrid>
+      <StyledOverview>
+      <StyledSquare><h3>Total items: <br />{props.points.length}</h3></StyledSquare>
+      <StyledSquare><h3>Average price: <br />{findAveragePrice()}</h3></StyledSquare>
+      </StyledOverview>
       <StyledTable>
+        
         <h2>Current Page is: {currentPage}</h2>
         <StyledListHeadline>
           <div>Time:</div>
@@ -190,11 +219,7 @@ const Table: React.FC<Props> = (props) => {
         </StyledInput>
         {tableButtons()}
         <h2>Current Page is: {currentPage}</h2>
-      </StyledTable> 
-      <br />
-      
-      
-      
+      </StyledTable>       
 
     </OuterGrid>
   );
