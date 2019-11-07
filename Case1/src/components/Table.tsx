@@ -27,13 +27,13 @@ const StyledTable = styled.div`
 `
 
 const StyledListHeadline = styled.h1`
-  border: 1px solid black;
+border: 0.01em solid grey;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 `
 
 const StyledListItem = styled.p`
-  border: 1px solid black;
+  border: 0.01em solid grey;
   font-size: 1.5em;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -45,11 +45,20 @@ const StyledButtons = styled.div`
 `
 
 const Button = styled.button`
-  font-size: 2em;
+  font-size: 1.5em;
 `
 
 const InlineText = styled.p`
   display:inline;
+`
+
+const StyledInput = styled.div`
+padding:1em;
+
+  input[type=number] {
+    height: 2em;
+
+  }
 `
 
 export interface Props {
@@ -65,6 +74,7 @@ const Table: React.FC<Props> = (props) => {
   const [newList, setNewList] = useState(divideIntoPieces(props.points))
   const [test, setTest] = useState('2')
   const [currentArray, setCurrentArray] = useState([[]])
+  const [newRow, setNewRow] = useState('')
 
   useEffect(() => {
     setPageNumbers(newList.length)
@@ -95,6 +105,21 @@ const Table: React.FC<Props> = (props) => {
     return newArray
   } 
 
+  /* Add a row to newList and check wheter or not the last list is more or equal to 20, 
+    if so create a new list and concat it to the old
+   */
+  const addRow = (value:string) => {
+    let list = newList
+    var date = new Date()
+    if(newList[newList.length-1].length % 20 === 0) {
+      setNewList(newList.concat([[date.getTime(), value]]))
+    }else {
+      list[newList.length-1].push([date.getTime(), value])
+      setNewList(list)
+    }
+    return newList
+  }
+
   /* Returns the values of the table
     Use if statements to ensure the values excist before making them into Dates
   
@@ -111,6 +136,7 @@ const Table: React.FC<Props> = (props) => {
       <div>
         {(p[0] ? new Date(p[0]).getUTCDate() : p[0])} 
         {(p[0] ? months[new Date(p[0]).getUTCMonth()] : p[0])}
+        {(p[0] ? new Date(p[0]).getUTCFullYear() : p[0])}
       </div>
       <div>
         {p[1]} MW/H
@@ -124,6 +150,7 @@ const Table: React.FC<Props> = (props) => {
 
   /* return the buttons used to navigate the table
     use if statements to ensure that the "jump 10 pages" buttons don't go out of bounds
+    use a <div></div> in case of out of bounds to ensure the buttons don't jump around
 
     OnClickEvents:
       changePage -- sets the currentPage and also tells the data to render the date of that page
@@ -132,10 +159,10 @@ const Table: React.FC<Props> = (props) => {
   const tableButtons = () => {
     return <StyledButtons>
     <Button onClick={() => changePage(0)}>First page</Button>
-    {currentPage>9 ? <Button onClick={() => changePage(currentPage-10)}>Jump 10 back</Button> : ''}
-    {currentPage>0 ? <Button onClick={() => changePage(currentPage-1)}>Prev</Button> : ''}
-    {currentPage<pageNumbers-1 ? <Button onClick={() => changePage(currentPage+1)}>Next</Button> : ''}
-     {currentPage<pageNumbers-10 ? <Button onClick={() => changePage(currentPage+10)}>Jump 10 forwards</Button> : ''}
+    {currentPage>9 ? <Button onClick={() => changePage(currentPage-10)}>Jump 10 back</Button> : <div></div>}
+    {currentPage>0 ? <Button onClick={() => changePage(currentPage-1)}>Prev</Button> : <div></div>}
+    {currentPage<pageNumbers-1 ? <Button onClick={() => changePage(currentPage+1)}>Next</Button> : <div></div>}
+     {currentPage<pageNumbers-10 ? <Button onClick={() => changePage(currentPage+10)}>Jump 10 forwards</Button> : <div></div>}
     <Button onClick={() => changePage(pageNumbers-1)}>Last page</Button>
   </StyledButtons>
   }
@@ -153,11 +180,21 @@ const Table: React.FC<Props> = (props) => {
           <div>Delete:</div>
         </StyledListHeadline>
         {tableItems()}
+        <StyledInput>
+          <input 
+          type="number"
+          onChange={({target}) => setNewRow(target.value)}
+         />
+          <Button onClick={() => addRow(newRow)}>Add new row</Button>
+          <Button onClick={() => props.data(concatArray(newList))}>Save data</Button>
+        </StyledInput>
         {tableButtons()}
         <h2>Current Page is: {currentPage}</h2>
       </StyledTable> 
       <br />
-      <Button onClick={() => props.data(concatArray(newList))}>Save data</Button>
+      
+      
+      
 
     </OuterGrid>
   );

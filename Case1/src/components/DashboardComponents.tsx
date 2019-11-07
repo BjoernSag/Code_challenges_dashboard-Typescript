@@ -6,6 +6,7 @@ import {
 import Dashboard from './Dashboard'
 import Main from './Main'
 import Data from './Data'
+import TopBar from './TopBar'
 
 export interface Props {
 }
@@ -14,6 +15,7 @@ export interface Props {
 const DashboardComponents: React.FC<Props> = (props) => {
   return (
     <div>
+      <TopBar />
       <Router>
         <div>
           <Route isActive="main" exact path="/" render={() => <Dashboard isActive="main"> 

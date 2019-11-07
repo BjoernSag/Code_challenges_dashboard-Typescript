@@ -33,8 +33,9 @@ const NewGraph: React.FC<Props> = (props) => {
     const [graphName, changeGraph] = useState(props.graphs[0])
   return (
     <OuterGrid>
-        <h2>Create a new Graph:</h2>
-        <h4>What kind of graph do you want to use?</h4>
+        <h1>Create a new Graph:</h1>
+        <h3>What kind of graph do you want to use?</h3>
+        <br />
       <select onChange={(e) => changeGraph(e.target.value)} id='graphs'>
           {props.graphs.map(p => 
               <option key={p} onChange={() => console.log(changeGraph(p))} value={p}>{p}</option>

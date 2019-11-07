@@ -15,22 +15,13 @@ const OuterGrid = styled.div`
   
 `
 
-const Dropdown = styled.div`
-position: relative;
-  display: inline-block;
-  &:hover .dropdown-content {
-    display: block;
-  }
+const Button = styled.button`
+  font-size: 1.5em;
 `
 
-const DropdownContent = styled.div`
-display: none;
-position: absolute;
-background-color: #f9f9f9;
-min-width: 160px;
-box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-padding: 12px 16px;
-z-index: 1;
+const StyledNewGraph = styled.div`
+  text-align:center;
+  align-text:center;
 `
 
 const GraphComponents = styled.div`
@@ -78,7 +69,7 @@ const DashboardComponents: React.FC<Props> = (props) => {
   /* Render the table to the screen if the user clicks the Edit data button */
   const table = () => {
     return <div>
-    <button onClick={() => isEditing(!editData)}>Edit data?</button>
+    <Button onClick={() => isEditing(!editData)}>{editData ? 'Hide data' : 'Show data'}</Button>
     {editData ? <Table points={currentDataset.points} data={(value:any) => setData(value)}/> : '' }
   </div>
   }
@@ -86,9 +77,11 @@ const DashboardComponents: React.FC<Props> = (props) => {
   /* Renders a dropdown select where the user can select a new type of graph to add to the view, based
   on the available dataset */
   const addNewGraphComponent = () => {
-    return <NewGraph graphs={graphs} amountOfGraphs={graphsArray.length} addGraph={(value:any) => 
-      addGraph(value.name , value.id)}
-    />
+    return <StyledNewGraph>
+      <NewGraph graphs={graphs} amountOfGraphs={graphsArray.length} addGraph={(value:any) => 
+        addGraph(value.name , value.id)}
+      />
+    </StyledNewGraph>
   }
 
   /* Renders the chosen graph components to the screen
